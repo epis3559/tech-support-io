@@ -6,18 +6,10 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * The responder class represents a response generator object.
- * It is used to generate an automatic response, based on specified input.
- * Input is presented to the responder as a set of words, and based on those
- * words the responder will generate a String that represents the response.
- *
- * Internally, the reponder uses a HashMap to associate words with response
- * strings and a list of default responses. If any of the input words is found
- * in the HashMap, the corresponding response is returned. If none of the input
- * words is recognized, one of the default responses is randomly chosen.
- * 
- * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * The file default.text has been modified per excercise 12.47 details. 
+ * The responder class of the tech-support-io project has been modified per excerise 12.45 details.
+ * @author Edward Pisco.
+ * @version 2015.04.30
  */
 public class Responder
 {
@@ -43,20 +35,53 @@ public class Responder
 
     /**
      * Generate a response from a given set of input words.
-     * 
-     * @param words  A set of words entered by the user
-     * @return       A string that should be displayed as the response
+     * @param words A set of words entered by the user
+     * @return A string that should be displayed as the response
+     */
+    /**
+     * Modified the responder class of the tech support io project.
+     * Program reads the associations between keywords and repsonses from the text file.
      */
     public String generateResponse(HashSet<String> words)
     {
+        String line;
+        BufferedReader reader;
+        try
+        {
+        reader = new BufferedReader(new FileReader("resposes.txt"));
         Iterator<String> it = words.iterator();
-        while(it.hasNext()) {
+        while(it.hasNext());
+        {
             String word = it.next();
             String response = responseMap.get(word);
-            if(response != null) {
+            word = it.next();
+            line = reader.readLine();
+            while(line !=null)
+            {
+                if(line.trim().equalsIgnoreCase(word.trim()))
+                {
+                    response = reader.readLine();
+            }
+            if(response != null)
+            {
                 return response;
             }
+            else
+            {
+                reader.readLine();
         }
+                line = reader.readLine();
+            }
+        }
+        reader.close();
+    }
+    catch(FileNotFoundException e) {
+            System.err.println("Unable to open " + FILE_OF_DEFAULT_RESPONSES);
+        }
+    catch(IOException e)
+    {
+        System.err.println("A probelm was encountered reading " + FILE_OF_DEFAULT_RESPONSES);
+    }
         // If we get here, none of the words from the input line was recognized.
         // In this case we pick one of our default responses (what we say when
         // we cannot think of anything else to say...)
@@ -67,6 +92,7 @@ public class Responder
      * Enter all the known keywords and their associated responses
      * into our response map.
      */
+
     private void fillResponseMap()
     {
         responseMap.put("crash", 
@@ -129,6 +155,7 @@ public class Responder
             String response = reader.readLine();
             while(response != null) {
                 defaultResponses.add(response);
+                reader.readLine(); // Added code to read the line which is empty.
                 response = reader.readLine();
             }
             reader.close();
