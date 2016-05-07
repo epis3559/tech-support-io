@@ -6,9 +6,10 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * The file default.text has been modified per excercise 12.47 details. 
  * The responder class of the tech-support-io project has been modified per excerise 12.45 details.
- * @author Edward Pisco.
+ * The file default.text has been modified per excercise 12.47 details.
+ * The Responder class reads the association between keywords and responses from a text file.
+ * @author Edward Pisco. 
  * @version 2015.04.30
  */
 public class Responder
@@ -44,6 +45,7 @@ public class Responder
      */
     public String generateResponse(HashSet<String> words)
     {
+        // modified method per excerise 12.47
         String line;
         BufferedReader reader;
         try
@@ -147,7 +149,7 @@ public class Responder
      * Build up a list of default responses from which we can pick
      * if we don't know what else to say.
      */
-    private void fillDefaultResponses()
+    private void fillDefaultResponses() 
     {
         try {
             BufferedReader reader = new BufferedReader(
@@ -175,7 +177,7 @@ public class Responder
 
     /**
      * Randomly select and return one of the default responses.
-     * @return     A random default response
+     * @return A random default response
      */
     private String pickDefaultResponse()
     {
